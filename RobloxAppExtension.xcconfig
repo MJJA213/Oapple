@@ -1,0 +1,24 @@
+//
+//  RobloxAppExtensions.xcconfig
+//  RobloxMobile
+//
+
+#include "RobloxMobile.xcconfig"
+
+//
+//  Common setup
+//
+WRAPPER_EXTENSION = appex
+
+//
+// Provisioning Profile configs
+//
+// Allows name to be diffferent, ex: shortened due to 50char max for profiles
+RBX_PROVISIONING_PROFILE_EXT_NAME = $(PRODUCT_NAME)
+RBX_PROVISIONING_PROFILE_EXT_DEFAULT = $(RBX_PROVISIONING_PROFILE_PREFIX)_Ext_$(RBX_PROVISIONING_PROFILE_EXT_NAME)_$(RBX_PROVISIONING_PROFILE_TYPE)
+
+// Explanation:
+// Specifier will be set to overridden param if exists, otherwise uses convention default above
+PROVISIONING_PROFILE_SPECIFIER_TeamCity = $(RBX_PROVISIONING_PROFILE_$(PRODUCT_NAME):default=$(RBX_PROVISIONING_PROFILE_EXT_DEFAULT))
+// Combined with build env to allow for empty param which grants ability to use Xcode's Automatic signing.
+PROVISIONING_PROFILE_SPECIFIER = $(PROVISIONING_PROFILE_SPECIFIER_$(RBX_BUILD_ENV))

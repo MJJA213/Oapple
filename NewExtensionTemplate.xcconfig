@@ -1,0 +1,47 @@
+//
+//  NewExtensionTemplate.xcconfig
+//  RobloxMobile
+//
+//  Template that can be used for new extensions.
+//
+//  Requirements for AppExtensions:
+//    - Version info must match main app
+//    - Code sign identity must match main app
+// 
+//  Notes for AppExtension:
+//    - In Xcode, *MUST* blank out field for version info
+//      This ensures AppEx will use CURRENT_PROJECT_VERSION + MARKETING_VERSION
+//      Thus the Info.plist has either
+//        - No keys for CFBundleVersion + CFBundleShortVersionString; or
+//        - Values as named parameters ${CURRENT_PROJECT_VERSION} + ${MARKETING_VERSION}
+//    - Executable Name
+//        - If not provided Executable name uses Product name
+//        - CFBundleExecutable must match the name of the bundle directory minus its extension.
+//
+//  Future considerations:
+//    - Lean into "INFOPLIST_KEY_" (might require GENERATE_INFOPLIST_FILE)
+//
+
+#include "RobloxAppExtension.xcconfig"
+
+//
+//  Common setup
+//  Mostly required for ease of usage and pipeline optimization
+//
+PRODUCT_NAME = RBNewExtensionTemplate
+
+PRODUCT_BUNDLE_IDENTIFIER = $(RBX_APPEX_BUNDLE_ID_PREFIX:lower).$(PRODUCT_NAME)
+
+INFOPLIST_FILE = $(PRODUCT_NAME)-Info.plist
+
+//
+// Provisioning Profile configs
+// Use extension name while removing "RB" and "Extension".
+// Note: sometimes may be further truncated from due to char max
+// Can override at build-time with `RBX_PROVISIONING_PROFILE_<Insert PRODUCT_NAME value>`
+//
+RBX_PROVISIONING_PROFILE_EXT_NAME = <check with App Build team>
+
+
+// Optional for local development
+#include? "Local.xcconfig"
